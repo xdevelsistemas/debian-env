@@ -62,7 +62,7 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 
 
-USER postgres
+#USER postgres
 
 EXPOSE 5432
 CMD ["pg_ctlcluster ${PG_MAJOR} main start"]
