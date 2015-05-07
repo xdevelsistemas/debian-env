@@ -1,7 +1,6 @@
 FROM debian:latest
 MAINTAINER Clayton Santos da Silva "clayton@xdevel.com.br"
 
-
 RUN apt-get update &&\
     apt-get install -y openssh-server &&\
     apt-get install -y sudo &&\
@@ -14,7 +13,7 @@ RUN apt-get update &&\
     apt-get update && \
     echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
     echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y oracle-java8-installer oracle-java8-set-default  && \
+    DEBIAN_FRONTEND=noninteractive  apt-get install -yq oracle-java7-installer oracle-java7-set-default  && \
     #Clean up apt-repository
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
