@@ -6,10 +6,10 @@ ENV DEBIAN_FRONTEND noninteractive
 
 
 # Install packages
-RUN apt-get update && apt-get install -y mongodb-server
+RUN apt-get update && apt-get install -y mongodb-server && \
+	mkdir -p /var/opt/mongodb && \ 
+	chown mongodb.mongodb /var/opt/mongodb 
 
-# Create database directory
-RUN mkdir -p /var/opt/mongodb && chown mongodb.mongodb /var/opt/mongodb
 
 # Expose MongoDB port
 EXPOSE 27017
