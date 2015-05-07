@@ -51,7 +51,7 @@ COPY docker-entrypoint.sh /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-USER postgres
+#USER postgres
 
 EXPOSE 5432
 CMD ["/usr/lib/postgresql/$PG_MAJOR/bin/postgres", "-D", "/var/lib/postgresql/$PG_MAJOR/main", "-c", "config_file=/etc/postgresql/$PG_MAJOR/main/postgresql.conf"]
