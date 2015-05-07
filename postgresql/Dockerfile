@@ -52,7 +52,9 @@ RUN pg_createcluster $PG_MAJOR main && \
 COPY docker-entrypoint.sh /
 
 RUN chown root:root docker-entrypoint.sh && \
-	chmod u+rx docker-entrypoint.sh 
+	chmod u+rx docker-entrypoint.sh && \ 
+	chown -R postgres /etc/postgresql  && \ 
+	chown -R postgres /var/lib/postgresql 
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
