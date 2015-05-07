@@ -49,6 +49,9 @@ VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
 
 COPY docker-entrypoint.sh /
 
+RUN chown root:root docker-entrypoint.sh && \
+	chmod u+rx docker-entrypoint.sh 
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 #USER postgres
