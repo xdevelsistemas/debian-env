@@ -43,21 +43,24 @@ ENV PGDATA /var/lib/postgresql/$PG_MAJOR/main/data
 
 COPY docker-entrypoint.sh /
 
-RUN chown root:root docker-entrypoint.sh && \
-	chmod u+rx docker-entrypoint.sh && \ 
-	mkdir -p /etc/postgresql && chown -R postgres:postgres /etc/postgresql  && \ 
-	mkdir -p /var/log/postgresql && chown -R postgres:postgres /var/log/postgresql  && \ 
-	mkdir -p /var/lib/postgresql && chown -R postgres:postgres /var/lib/postgresql 
-
 
 VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+
+
+
+RUN chown root:root docker-entrypoint.sh && \
+	chmod u+rx docker-entrypoint.sh && \ 
+	chown -R postgres:postgres /etc/postgresql  && \ 
+	chown -R postgres:postgres /var/log/postgresql  && \ 
+	chown -R postgres:postgres /var/lib/postgresql 
+
 
 
 #RUN pg_createcluster $PG_MAJOR main && \
 #	echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/${PG_MAJOR}/main/pg_hba.conf  && \
 #	echo "listen_addresses='*'" >> /etc/postgresql/${PG_MAJOR}/main/postgresql.conf 
 
-
+RUN chmod -R 700 /var/lib/postgresql
 
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
@@ -68,4 +71,4 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 USER postgres
 
 EXPOSE 5432
-CMD ["pg_ctlcluster "+${PG_MAJOR}+" main start"]
+CMD ["pg_ctlcluster "${PG_MAJOR}" main start"]
