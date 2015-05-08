@@ -37,7 +37,7 @@ VOLUME /data/db
 
 COPY docker-entrypoint.sh /entrypoint.sh
 
-RUN chmod a+x /docker-entrypoint.sh
+RUN chmod a+x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
