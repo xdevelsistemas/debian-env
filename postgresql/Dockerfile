@@ -45,9 +45,9 @@ COPY docker-entrypoint.sh /
 
 RUN chown root:root docker-entrypoint.sh && \
 	chmod u+rx docker-entrypoint.sh && \ 
-	chown -R postgres:postgres /etc/postgresql  && \ 
-	chown -R postgres:postgres /var/log/postgresql  && \ 
-	chown -R postgres:postgres /var/lib/postgresql 
+	mkdir -p /etc/postgresql && chown -R postgres:postgres /etc/postgresql  && \ 
+	mkdir -p /var/log/postgresql && chown -R postgres:postgres /var/log/postgresql  && \ 
+	mkdir -p /var/lib/postgresql && chown -R postgres:postgres /var/lib/postgresql 
 
 
 VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
