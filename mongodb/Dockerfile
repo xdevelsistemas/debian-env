@@ -5,7 +5,7 @@ MAINTAINER Clayton Santos da Silva "clayton@xdevel.com.br"
 ENV DEBIAN_FRONTEND noninteractive
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
-RUN groupadd -r mongodb && mongodb -r -g mongodb mongodb
+RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
 
 
 # Install packages
