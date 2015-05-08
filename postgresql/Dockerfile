@@ -40,7 +40,7 @@ RUN apt-get update \
 ENV PATH /usr/lib/postgresql/$PG_MAJOR/bin:$PATH
 ENV PGDATA /var/lib/postgresql/$PG_MAJOR/main/data
 
-VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+#VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
 
 
 RUN pg_createcluster $PG_MAJOR main && \
@@ -65,4 +65,4 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 #USER postgres
 
 EXPOSE 5432
-CMD ["pg_ctlcluster ${PG_MAJOR} main start"]
+CMD ["pg_ctlcluster "+${PG_MAJOR}+" main start"]
