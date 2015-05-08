@@ -1,5 +1,5 @@
 # vim:set ft=dockerfile:
-FROM debian:jessie
+FROM debian:wheezy
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r postgres && useradd -r -g postgres postgres
@@ -24,9 +24,9 @@ RUN mkdir /docker-entrypoint-initdb.d
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 
 ENV PG_MAJOR 9.4
-ENV PG_VERSION 9.4.1-1.pgdg80+1
+ENV PG_VERSION 9.4.1-1.pgdg70+1
 
-RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main' $PG_MAJOR > /etc/apt/sources.list.d/pgdg.list
+RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main' $PG_MAJOR > /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get update \
 	&& apt-get install -y postgresql-common \
@@ -34,41 +34,17 @@ RUN apt-get update \
 	&& apt-get install -y \
 		postgresql-$PG_MAJOR=$PG_VERSION \
 		postgresql-contrib-$PG_MAJOR=$PG_VERSION \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& mkdir -p /var/run/postgresql && chown -R postgres /var/run/postgresql  
+	&& rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /var/run/postgresql && chown -R postgres /var/run/postgresql
 
 ENV PATH /usr/lib/postgresql/$PG_MAJOR/bin:$PATH
-ENV PGDATA /var/lib/postgresql/$PG_MAJOR/main/data
-
+ENV PGDATA /var/lib/postgresql/data
+VOLUME /var/lib/postgresql/data
 
 COPY docker-entrypoint.sh /
 
-
-VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
-
-
-
-RUN chown root:root docker-entrypoint.sh && \
-	chmod u+rx docker-entrypoint.sh && \ 
-	chown -R postgres:postgres /etc/postgresql  && \ 
-	chown -R postgres:postgres /var/log/postgresql  && \ 
-	chown -R postgres:postgres /var/lib/postgresql 
-
-
-
-#RUN pg_createcluster $PG_MAJOR main && \
-#	echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/${PG_MAJOR}/main/pg_hba.conf  && \
-#	echo "listen_addresses='*'" >> /etc/postgresql/${PG_MAJOR}/main/postgresql.conf 
-
-RUN chmod -R 700 /var/lib/postgresql
-
-
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-
-
-
-USER postgres
-
 EXPOSE 5432
-CMD ["pg_ctlcluster "${PG_MAJOR}" main start"]
+CMD ["postgres"]
