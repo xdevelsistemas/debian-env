@@ -40,29 +40,32 @@ RUN apt-get update \
 ENV PATH /usr/lib/postgresql/$PG_MAJOR/bin:$PATH
 ENV PGDATA /var/lib/postgresql/$PG_MAJOR/main/data
 
-#VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
-
-
-RUN pg_createcluster $PG_MAJOR main && \
-	echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/${PG_MAJOR}/main/pg_hba.conf  && \
-	echo "listen_addresses='*'" >> /etc/postgresql/${PG_MAJOR}/main/postgresql.conf 
-
-
 
 COPY docker-entrypoint.sh /
 
 RUN chown root:root docker-entrypoint.sh && \
 	chmod u+rx docker-entrypoint.sh && \ 
-	chown -R postgres /etc/postgresql  && \ 
-	chown -R postgres /var/log/postgresql  && \ 
-	chown -R postgres /var/lib/postgresql 
+	chown -R postgres:postgres /etc/postgresql  && \ 
+	chown -R postgres:postgres /var/log/postgresql  && \ 
+	chown -R postgres:postgres /var/lib/postgresql 
+
+
+VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+
+
+#RUN pg_createcluster $PG_MAJOR main && \
+#	echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/${PG_MAJOR}/main/pg_hba.conf  && \
+#	echo "listen_addresses='*'" >> /etc/postgresql/${PG_MAJOR}/main/postgresql.conf 
+
+
+
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 
 
 
-#USER postgres
+USER postgres
 
 EXPOSE 5432
 CMD ["pg_ctlcluster "+${PG_MAJOR}+" main start"]
