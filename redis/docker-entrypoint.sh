@@ -2,8 +2,9 @@
 set -e
 
 if [ "$1" = 'redis-server' ]; then
-	chown -R redis .
-	exec gosu redis "$@"
+	#chown -R redis .
+	#exec gosu redis "$@"
+	exec "$@"
 fi
 
 exec "$@"
