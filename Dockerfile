@@ -4,7 +4,7 @@ MAINTAINER Clayton Santos da Silva "clayton@xdevel.com.br"
 
 RUN apt-get update &&\
     apt-get install -y openssh-server &&\
-    apt-get install -y sudo &&\
+    apt-get install -y sudo curl  &&\
     echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" >> /etc/apt/sources.list && \
     TMPNAME=$(tempfile) && \
     apt-get update >> /dev/null 2> $TMPNAME && \
