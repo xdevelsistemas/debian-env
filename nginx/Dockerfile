@@ -2,7 +2,8 @@ FROM xdevelsistemas/debian-env:java7-env
 
 MAINTAINER Clayton Santos da Silva "clayton@xdevel.com.br"
 
-ENV NGINX_VERSION 1.9.0-1~jessie
+ENV NGINX_VERSION 1.9.7-1~jessie
+
 
 RUN wget -c http://nginx.org/keys/nginx_signing.key && \
     apt-key add nginx_signing.key && \
