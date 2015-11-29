@@ -35,7 +35,7 @@ RUN set -x; \
         && rm -rf /var/lib/apt/lists/* wkhtmltox.deb \
 	&& groupadd -r fuse \ 
     	&& chmod g+rw /dev/fuse \
-    	&& chgrp fuse /dev/fuse \  
+    	&& chgrp fuse /dev/fuse  
 
 #openfuse reqs
 RUN  wget https://github.com/s3fs-fuse/s3fs-fuse/archive/v1.79.tar.gz -O /usr/src/v1.79.tar.gz \
