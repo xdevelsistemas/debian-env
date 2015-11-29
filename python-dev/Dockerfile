@@ -25,7 +25,7 @@ RUN set -x; \
 	    libssl-dev \
 	    file \  
 	    g++ \
-	    build-essential automake libcrypto* libfuse*  gettext libcurl3 libcurl3-dev libxml2 libxml2-utils libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support automake libtool wget tar \     
+	    build-essential automake libcrypto* libfuse* fuse-utils  gettext libcurl3 libcurl3-dev libxml2 libxml2-utils libfuse-dev libcurl4-openssl-dev libxml2-dev mime-support automake libtool wget tar \     
         && curl -o wkhtmltox.deb -SL http://nightly.odoo.com/extra/wkhtmltox-0.12.1.2_linux-jessie-amd64.deb \
         && echo '40e8b906de658a2221b15e4e8cd82565a47d7ee8 wkhtmltox.deb' | sha1sum -c - \
         && dpkg --force-depends -i wkhtmltox.deb \
